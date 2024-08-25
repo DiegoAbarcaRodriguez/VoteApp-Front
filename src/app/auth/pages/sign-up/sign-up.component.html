@@ -1,0 +1,48 @@
+<div class="login p-5 pt-3 " [ngStyle]="{ height:form.invalid && form.touched ? '600px': '500px' }">
+
+    <div class="circle"></div>
+
+    <h1 class="login__title fw-bold">
+        Register
+    </h1>
+
+    <p class="login__description">
+        Register to enjoy the power of manage multiples probes.
+    </p>
+
+    <form class="form mt-2" [formGroup]="form" (ngSubmit)="register()">
+
+        <div class="form__field mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input id="name" type="text" class="form-control" placeholder="user99" formControlName="name">
+            <shared-error-message [form]="form" field="name" [errors]="form.get('name')?.errors || {}"></shared-error-message>
+        </div>
+      
+        <div class="form__field mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" type="text" class="form-control" placeholder="m@example.com" formControlName="email">
+            <shared-error-message [form]="form" field="email" [errors]="form.get('email')?.errors || {}"></shared-error-message>
+        </div>
+
+        <div class="form__field mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input id="password" type="password" class="form-control" formControlName="password">
+            <shared-error-message [form]="form" field="password" [errors]="form.get('password')?.errors || {}"></shared-error-message>
+        </div>
+        <div class="form__field mb-3">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input id="password2" type="password" class="form-control" formControlName="password2">
+            <shared-error-message [form]="form" field="password2" [errors]="form.get('password2')?.errors || {}"></shared-error-message>
+        </div>
+
+        <button type="submit" class=" btn btn-primary w-100">Save</button>
+
+
+    </form>
+
+</div>
+
+<div class="d-flex align-items-center justify-content-between mt-3">
+    <a routerLink="/forget-password" class="text-decoration-none ">Have you forggoten your password?</a>
+    <a routerLink="/sign-in" class="text-decoration-none ">I already have an account</a>
+</div>

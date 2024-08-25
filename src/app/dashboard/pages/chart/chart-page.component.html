@@ -1,0 +1,14 @@
+<div class="container-chart" [ngStyle]="{display: optionsToVote.length===0 ? 'none' :''}">
+    <canvas #chart></canvas>
+
+</div>
+
+
+
+<div class="row" *ngIf="optionsToVote.length===0">
+
+    <span class="my-4 alert alert-info text-center text-uppercase fw-bold">
+        There are not options yet!
+    </span>
+
+</div>

@@ -1,0 +1,40 @@
+<div class="login p-5 ">
+
+    <div class="circle"></div>
+
+    <h1 class="login__title fw-bold">
+        Login
+    </h1>
+
+    <p class="login__description">
+        Enter your email or user name and password to access your account.
+    </p>
+
+    <form class="form mt-3" [formGroup]="form" (ngSubmit)="login()">
+        <div class="form__field mb-3">
+            <label for="user" class="form-label">Email / User Name</label>
+            <input id="user" type="text" class="form-control" placeholder="m@example.com" formControlName="user">
+            <shared-error-message [form]="form" field="user" [errors]="form.get('user')?.errors || {}"></shared-error-message>
+        </div>
+
+        <div class="form__field mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input id="password" type="password" class="form-control" formControlName="password">
+            <shared-error-message [form]="form" field="password" [errors]="form.get('password')?.errors || {}"></shared-error-message>
+        </div>
+
+
+        <div class="d-flex justify-content-between align-items-center gap-2 mt-5">  
+            <button type="submit" class=" btn btn-outline-primary w-100">Login</button>
+            <div #buttonGoogle id="buttonDiv"></div>
+        </div>
+    </form>
+
+</div>
+
+<div class="d-flex align-items-center justify-content-between mt-3">
+    <a routerLink="/forget-password" class="text-decoration-none  ">Have you forggoten your password?</a>
+    <a routerLink="/sign-up" class="text-decoration-none  ">I want to create a
+        account</a>
+
+</div>

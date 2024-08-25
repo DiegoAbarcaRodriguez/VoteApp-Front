@@ -1,0 +1,75 @@
+<div class="modal-container" #modalVotes>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title fw-bold text-black me-auto">
+                    {{vote ? 'Edit ' + vote.title + ' Option' : 'Add Option to Vote' }}
+                </span>
+
+                <div class="btn btn-close" (click)="closeModal()"></div>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-3">
+                    <form [formGroup]="form!" class="col" [class.col-md-6]="temporalImage || vote?.img"
+                        (ngSubmit)="onSubmitForm()">
+                        <div class="mb-3">
+
+                            <label for="title" class="form-label">Title</label>
+                            <input id="title" name="title" type="text" class="form-control" placeholder="Type the title"
+                                formControlName="title">
+
+                            <div *ngIf="isInvalidAndTouchedControl('title')">
+                                <p class="text-danger fw-bold text-left"
+                                    *ngFor="let error of  getErrorsOfControl('title')">
+                                    {{error}}!
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+
+                            <label for="description" class="form-label">Description</label>
+                            <input id="description" name="description" type="text" class="form-control"
+                                placeholder="Type the description" formControlName="description">
+
+                            <div *ngIf="isInvalidAndTouchedControl('description')">
+                                <p class="text-danger fw-bold text-left"
+                                    *ngFor="let error of  getErrorsOfControl('description')">
+                                    {{error}}!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                            <label for="file" class="form-label">Image</label>
+                            <input id="file" accept="image/png, image/jpeg, image/jpg, image/webp , image/jpe"
+                                type="file" class="form-control" name="img" formControlName="img"
+                                (change)="changeImage($any($event.target).files[0])">
+
+                            <div *ngIf="isInvalidAndTouchedControl('img')">
+                                <p class="text-danger fw-bold text-left"
+                                    *ngFor="let error of  getErrorsOfControl('img')">
+                                    {{error}}!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button [disabled]="form!.invalid" type="submit"
+                                class="btn btn-primary text-white flex-grow-1">Accept</button>
+                            <button class="btn btn-danger text-white flex-grow-1" (click)="closeModal()">Cancel</button>
+                        </div>
+                    </form>
+
+                    <div class="col-md-6 col" *ngIf="temporalImage || vote?.img">
+                        <img [src]="vote?.img" alt="Imagen temporal" class="img-fluid"
+                            *ngIf="vote?.img && !temporalImage">
+                        <img [src]="temporalImage" alt="Imagen temporal" class="img-fluid" *ngIf="temporalImage ">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-6 offset-6" *ngIf="isLoading; else listOptions">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <ng-template #listOptions>
+        <span class="my-4 alert alert-info text-center text-uppercase fw-bold" *ngIf="optionsToVote.length===0">
+            There are not options yet!
+        </span>
+        <div class="col-md-4 col-lg-3 col" *ngFor="let option of optionsToVote">
+            <shared-card [optionToVote]="option"></shared-card>
+        </div>
+    </ng-template>
+
+</div>

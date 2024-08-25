@@ -1,0 +1,15 @@
+@import '/src//styles/variables';
+
+
+.layout {
+    height:100%;
+
+    @media(min-width: 468px) {
+        width: 100%;
+    }
+
+    width: fit-content;
+   
+
+}
+

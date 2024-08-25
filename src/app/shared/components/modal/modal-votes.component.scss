@@ -1,0 +1,20 @@
+.modal-container {
+    background-color: white;
+    box-shadow: 2px 3px 5px 5px black;
+    border-radius: 5%;
+    padding: 20px;
+    opacity: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 2;
+}
+
+.hide {
+    transition: all 1s linear;
+    opacity: 0;
+    top: -50%;
+    left: 50%;
+    transform: translateY(-100%) translateX(-50%);
+}
