@@ -1,13 +1,12 @@
-<shared-navbar></shared-navbar>
+<shared-navbar *ngIf="title !== 'What do you wanna do?'"></shared-navbar>
 
-<div class="container py-3 px-2">
+<div class="container" [ngClass]="{'dashboard':!mustHideTitle,'dashboard-expand mb-4': mustHideTitle}">
     <div class="row">
-        <h1 class="display-4 fw-bold text-black text-center">{{title}}</h1>
+        <h1 class="display-4 fw-bold text-black text-center animate__animated animate__bounceInDown"
+            *ngIf="!mustHideTitle">{{title}}</h1>
         <router-outlet></router-outlet>
 
     </div>
 </div>
-
-
 
 <shared-footer></shared-footer>

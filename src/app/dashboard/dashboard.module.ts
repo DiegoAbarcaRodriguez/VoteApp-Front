@@ -7,6 +7,7 @@ import { VotesPageComponent } from './pages/votes/votes.component';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLayoutComponent } from './layout/dashboard-layout.component';
+import { MainPageComponent } from './pages/main/main-page.component';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout.component';
         ChartPageComponent,
         ManageVotesPageComponent,
         VotesPageComponent,
+        MainPageComponent,
         DashboardLayoutComponent
     ],
     providers: [],

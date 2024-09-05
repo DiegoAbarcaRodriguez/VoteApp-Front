@@ -18,12 +18,7 @@
                             <input id="title" name="title" type="text" class="form-control" placeholder="Type the title"
                                 formControlName="title">
 
-                            <div *ngIf="isInvalidAndTouchedControl('title')">
-                                <p class="text-danger fw-bold text-left"
-                                    *ngFor="let error of  getErrorsOfControl('title')">
-                                    {{error}}!
-                                </p>
-                            </div>
+                          <shared-error-message [form]="form" field="title" [errors]="form!.controls['title'].errors || {}"></shared-error-message>
 
                         </div>
                         <div class="mb-3">
@@ -32,12 +27,7 @@
                             <input id="description" name="description" type="text" class="form-control"
                                 placeholder="Type the description" formControlName="description">
 
-                            <div *ngIf="isInvalidAndTouchedControl('description')">
-                                <p class="text-danger fw-bold text-left"
-                                    *ngFor="let error of  getErrorsOfControl('description')">
-                                    {{error}}!
-                                </p>
-                            </div>
+                                <shared-error-message [form]="form" field="description" [errors]="form!.controls['description'].errors || {}"></shared-error-message>
                         </div>
                         <div class="mb-3">
 
@@ -46,18 +36,13 @@
                                 type="file" class="form-control" name="img" formControlName="img"
                                 (change)="changeImage($any($event.target).files[0])">
 
-                            <div *ngIf="isInvalidAndTouchedControl('img')">
-                                <p class="text-danger fw-bold text-left"
-                                    *ngFor="let error of  getErrorsOfControl('img')">
-                                    {{error}}!
-                                </p>
-                            </div>
+                                <shared-error-message [form]="form" field="img" [errors]="form!.controls['img'].errors || {}"></shared-error-message>
                         </div>
 
                         <div class="d-flex gap-3">
                             <button [disabled]="form!.invalid" type="submit"
                                 class="btn btn-primary text-white flex-grow-1">Accept</button>
-                            <button class="btn btn-danger text-white flex-grow-1" (click)="closeModal()">Cancel</button>
+                            <span class="btn btn-danger text-white flex-grow-1" (click)="closeModal()">Cancel</span>
                         </div>
                     </form>
 

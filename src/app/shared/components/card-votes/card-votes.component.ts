@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Vote } from '../../interfaces/vote.interface';
 import { Router } from '@angular/router';
-import { VotesService } from 'src/app/shared/services/votes.service';
 import { DomModalHelper } from '../../helpers/dom-modal.helper';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
@@ -9,14 +8,15 @@ import { PopUpAdaptador } from '../../plugin';
 import { ErrorMessages } from '../../enums/error.enum';
 import { RespondImageServer } from '../../interfaces';
 import { filter, switchMap } from 'rxjs';
+import { ModalService } from '../../services/modal.service';
 
 
 @Component({
-    selector: 'shared-card',
-    templateUrl: 'card.component.html'
+    selector: 'shared-card-votes',
+    templateUrl: 'card-votes.component.html'
 })
 
-export class CardComponent implements OnInit {
+export class CardVotesComponent implements OnInit {
 
     @Input()
     optionToVote?: Vote;
@@ -24,7 +24,7 @@ export class CardComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private votesService: VotesService,
+        private modalService: ModalService,
         private http: HttpClient
     ) { }
 
@@ -34,8 +34,8 @@ export class CardComponent implements OnInit {
 
 
     onClicButton(optionVote: Vote | undefined) {
-        new DomModalHelper(this.votesService).insertSCSSClassesModal();
-        this.votesService.onEmitClicOptionFromCard = { optionVote, isShowedModal: true };
+        new DomModalHelper(this.modalService).insertSCSSClassesModal();
+        this.modalService.onEmitClicOptionToEmit = { emittedObject: optionVote, isShowedModal: true };
 
     }
 

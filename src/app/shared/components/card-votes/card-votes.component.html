@@ -7,7 +7,7 @@
         <div class="card-text">{{optionToVote?.description}}</div>
     </div>
 
-    <div class="btn btn-primary fw-bold" *ngIf="currentUrl === '/vote';else buttons" (click)="onVote()">VOTE</div>
+    <div class="btn btn-primary fw-bold" *ngIf="currentUrl === '/dashboard/vote';else buttons" (click)="onVote()">VOTE</div>
 
     <ng-template #buttons>
         <div class="d-flex gap-3">

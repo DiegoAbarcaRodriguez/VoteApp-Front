@@ -1,9 +1,9 @@
 import { ElementRef } from "@angular/core";
-import { VotesService } from "../services/votes.service";
+import { ModalService } from "../services/modal.service";
 
 export class DomModalHelper {
 
-    constructor(private votesService: VotesService) { }
+    constructor(private modalService: ModalService) { }
 
     insertSCSSClassesModal() {
         const body = document.querySelector('body');
@@ -25,7 +25,7 @@ export class DomModalHelper {
             modalContainer?.nativeElement.classList.remove('hide');
             bgModal!.remove();
             document.body.style.overflow = 'auto';
-            this.votesService.onEmitClicOptionFromCard = { isShowedModal: false };
+            this.modalService.onEmitClicOptionToEmit = { isShowedModal: false };
 
         }, 1000);
     }

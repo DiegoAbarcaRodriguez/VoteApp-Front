@@ -20,13 +20,14 @@ export const PublicGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state:
 
             tap(({ ok }) => {
 
-                if (ok || authService.isFromGoogle) {
+                if (ok) {
                     router.navigateByUrl('/dashboard');
+                    return;
                 }
 
             }),
 
-            map(({ ok }) => !ok && !authService.isFromGoogle)
+            map(({ ok }) => !ok)
 
         );
 };

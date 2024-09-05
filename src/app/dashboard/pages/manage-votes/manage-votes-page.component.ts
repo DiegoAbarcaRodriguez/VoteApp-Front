@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { VotesService } from 'src/app/shared/services/votes.service';
-import { EmitionModalSettings, Vote } from 'src/app/shared/interfaces/vote.interface';
+import { Vote } from 'src/app/shared/interfaces/vote.interface';
 import { delay, tap } from 'rxjs';
 import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { EmitionModalSettings } from 'src/app/shared/interfaces';
 
 
 
@@ -18,7 +19,7 @@ export class ManageVotesPageComponent implements OnInit {
   currentUrl?: string;
 
   constructor(
-    private votesService: VotesService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -28,18 +29,22 @@ export class ManageVotesPageComponent implements OnInit {
   onEmitClicOptionFromCard() {
 
 
-    this.votesService.onEmitClicOptionFromCard
+    this.modalService.onEmitClicOptionToEmit
       .pipe(
-        tap(({ optionVote }: EmitionModalSettings) => this.optionVoteClicked = optionVote ? { ...optionVote, img: undefined } as Vote : undefined),
+        tap(({ emittedObject }: EmitionModalSettings) => this.optionVoteClicked = emittedObject ? { ...emittedObject, img: undefined } as Vote : undefined),
         tap(({ isShowedModal }: EmitionModalSettings) => this.isShowedModal = isShowedModal),
         delay(10),
       )
-      .subscribe(({ optionVote }: EmitionModalSettings) => this.optionVoteClicked!.img = optionVote?.img);
+      .subscribe(({ emittedObject }: any) => {
+        if (this.optionVoteClicked) {
+          this.optionVoteClicked.img = emittedObject?.img;
+        }
+      });
   }
 
   onClicAddOptionVote() {
-    new DomModalHelper(this.votesService).insertSCSSClassesModal();
-    this.votesService.onEmitClicOptionFromCard = { optionVote: undefined, isShowedModal: true };
+    new DomModalHelper(this.modalService).insertSCSSClassesModal();
+    this.modalService.onEmitClicOptionToEmit = { emittedObject: undefined, isShowedModal: true };
   }
 
 

@@ -3,8 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { VotesPageComponent } from './pages/votes/votes.component';
 import { ChartPageComponent } from './pages/chart/chart-page.component';
 import { ManageVotesPageComponent } from './pages/manage-votes/manage-votes-page.component';
+import { MainPageComponent } from './pages/main/main-page.component';
 
 const routes: Routes = [
+    {
+        path: 'main',
+        component: MainPageComponent,
+        data: {
+            title: 'What do you wanna do?'
+        }
+    },
     {
         path: 'vote',
         component: VotesPageComponent,
@@ -28,7 +36,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'vote',
+        redirectTo: 'main',
     }
 ]
 

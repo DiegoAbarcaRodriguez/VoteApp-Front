@@ -1,0 +1,18 @@
+<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-5">
+    <ul class="pagination">
+
+        <li class="page-item">
+            <a class="page-link" [ngStyle]="{cursor:'pointer'}" *ngIf="previousUrl"
+                (click)="onClickUrl(previousUrl)">Previous</a>
+        </li>
+
+        <li class="page-item" [ngClass]="{'active':currentPage==number+1 }" *ngFor="let number of pagesNumber">
+            <a class="page-link"  [ngStyle]="{cursor: currentPage === number +1?'':'pointer'}"
+                (click)="onClickUrl('/api/poll?page='+(number + 1)+'&limit=6')">{{number+1}}</a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link" [ngStyle]="{cursor:'pointer'}" *ngIf="nextUrl" (click)="onClickUrl(nextUrl)">Next</a>
+        </li>
+    </ul>
+</nav>

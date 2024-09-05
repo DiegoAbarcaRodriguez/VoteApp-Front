@@ -12,24 +12,21 @@ export const DashboardGuard: CanActivateFn = (route: ActivatedRouteSnapshot, sta
 
     const router = inject(Router);
     const authService = inject(AuthService);
-    console.log(authService.isFromGoogle)
+
     return authService.checkJWT()
         .pipe(
 
-
             tap(({ ok, token }) => {
 
-                if (!ok && !authService.isFromGoogle) {
+                if (!ok) {
                     router.navigateByUrl('/');
+                    return;
                 }
-
-                if (ok) {
-                    localStorage.setItem('token', token!);
-                }
+                localStorage.setItem('token', token!);
 
             }),
 
-            map(({ ok }) => ok || authService.isFromGoogle)
+            map(({ ok }) => ok)
 
         );
 

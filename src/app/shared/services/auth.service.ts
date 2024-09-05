@@ -13,7 +13,6 @@ export class AuthService {
     private _url = `${environments.baseUrl}/api/user`;
     private _user?: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : false;
 
-    isFromGoogle: boolean = localStorage.getItem('isFromGoogle') ? localStorage.getItem('isFromGoogle')! === 'true' : false;
 
     get user(): User | undefined {
         return this._user;
@@ -53,28 +52,27 @@ export class AuthService {
     }
 
     updatePassword(body: UpdatePasswordPayload): Observable<any> {
-        return this.http.post(`${this._url}/update-password`, body)
+        return this.http.put(`${this._url}/update-password`, body)
     }
 
     logout() {
 
-        if (this.isFromGoogle) {
+        if (this._user?.google) {
             google.accounts.id.revoke(this.user!.email, () => {
             });;
         }
 
-        this.isFromGoogle = false;
+        
         localStorage.clear();
         this.router.navigateByUrl('/sign-up');
     }
 
     loginGoogle(accessToken: string) {
-        return this.http.post(`${this._url}/google`, { accessToken })
-            .pipe(tap((user: any) => {
+        return this.http.post<LoginResponse>(`${this._url}/google`, { accessToken })
+            .pipe(tap(({ user, token }) => {
                 this._user = user;
-                this.isFromGoogle = true;
+                localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(this._user));
-                localStorage.setItem('isFromGoogle', 'true');
             }));
     }
 

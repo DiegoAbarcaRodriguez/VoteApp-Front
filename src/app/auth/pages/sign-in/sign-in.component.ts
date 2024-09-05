@@ -52,7 +52,7 @@ export class SignInComponent implements AfterViewInit {
 
         this.authService.loginGoogle(response.credential)
             .subscribe({
-                next: () => this.zone.run(() => this.router.navigateByUrl('/dashboard')),
+                next: () => this.zone.run(() => this.router.navigateByUrl('/dashboard/main')),
                 error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error', error.error, 'error')
             })
     }
@@ -67,9 +67,8 @@ export class SignInComponent implements AfterViewInit {
         let isByEmail = RegularExpressions.email.test(this.form.value.user!)
 
         this.authService.login({ ...this.form.value, isByEmail } as LoginPayload)
-
             .subscribe({
-                next: () => this.zone.run(() => this.router.navigateByUrl('/dashboard')),
+                next: () => this.zone.run(() => this.router.navigateByUrl('/dashboard/main')),
                 error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error', error.error, 'error')
             })
     }

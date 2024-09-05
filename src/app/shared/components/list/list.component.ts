@@ -73,10 +73,6 @@ export class ListComponent implements OnInit {
                     throw new Error('No option found');
                     break;
             }
-
-            console.log(this.optionsToVote)
-
-
         };
 
         socket.onclose = (event) => {

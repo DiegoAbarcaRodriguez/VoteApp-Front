@@ -1,5 +1,5 @@
 <ng-container *ngIf="isValidField()">
-    <P *ngFor="let error of getFieldErrors()" class="form-text text-danger">
+    <P *ngFor="let error of getFieldErrors(); let index = index" class="text-danger fw-bold text-left mb-0">
         {{error}}
     </P>
 </ng-container>

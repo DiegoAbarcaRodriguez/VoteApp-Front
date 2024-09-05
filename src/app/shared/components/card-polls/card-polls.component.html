@@ -1,0 +1,24 @@
+<h3 class="fw-bold ">{{poll?.title}}</h3>
+<p class="mb-0 mt-2">{{ poll?.description | slice:0:30}} {{poll?.description!.length >= 30? '...': ''}}</p>
+
+<div class="rounded-pill bg-light text-dark text-center">
+    <i class="fa-solid fa-user-large"></i>
+    <span class="fw-bold text-dark">{{poll?.numberOfParticipants}} participants</span>
+
+</div>
+
+<div class="d-flex align-items-center justify-content-around my-3">
+    <button class="btn border">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+    </button>
+    <button class="btn border">
+        <i class="fa-regular fa-eye"></i>
+    </button>
+    <button class="btn border">
+        <i class="fa-regular fa-pen-to-square"></i>
+    </button>
+    <button class="btn btn-outline-danger">
+        <i class="fa-regular fa-trash-can"></i>
+    </button>
+
+</div>

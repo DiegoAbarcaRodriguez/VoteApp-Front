@@ -1,23 +1,20 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { filter, switchMap } from 'rxjs';
 import { ErrorMessages } from 'src/app/shared/enums/error.enum';
 import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
 import { RespondImageServer } from 'src/app/shared/interfaces';
 import { Vote } from 'src/app/shared/interfaces/vote.interface';
 import { PopUpAdaptador } from 'src/app/shared/plugin';
-import { VotesService } from 'src/app/shared/services/votes.service';
-import { ValidatorService } from 'src/app/shared/validators/validator.service';
 import { environments } from 'src/environments/environment';
+import { ModalService } from '../../services/modal.service';
 
 
 
 @Component({
     selector: 'manage-votes-modal',
     templateUrl: 'modal-votes.component.html',
-    styleUrls: ['modal-votes.component.scss']
 })
 
 export class ModalVotesComponent implements OnInit {
@@ -42,10 +39,8 @@ export class ModalVotesComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private votesService: VotesService,
-        private valitatorService: ValidatorService,
+        private modalService: ModalService,
         private http: HttpClient,
-        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -70,20 +65,10 @@ export class ModalVotesComponent implements OnInit {
         }
     }
 
-    isInvalidAndTouchedControl(controlName: string): boolean {
-        return this.valitatorService.isTouchedAndInvalidControl(this.form!, controlName);
-
-    }
-
-
-    getErrorsOfControl(controlName: string): string[] {
-        const errors = this.form?.controls[controlName].errors;
-        return this.valitatorService.getError(errors!);
-    }
-
+  
 
     closeModal() {
-        new DomModalHelper(this.votesService).removeSCSSClassesModal(this.modalContainer!);
+        new DomModalHelper(this.modalService).removeSCSSClassesModal(this.modalContainer!);
     }
 
     changeImage(file: File) {

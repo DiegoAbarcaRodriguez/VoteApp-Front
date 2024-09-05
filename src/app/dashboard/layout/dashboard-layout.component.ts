@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
+import { titleOfPages } from 'src/app/shared/enums/title.enum';
+import { PollService } from 'src/app/shared/services/poll.service';
 
 @Component({
     templateUrl: 'dashboard-layout.component.html',
@@ -9,14 +11,20 @@ import { filter, map, Subscription } from 'rxjs';
 
 export class DashboardLayoutComponent implements OnInit, OnDestroy {
     title: string = '';
-    private subscription?: Subscription;
+    private subscription?: Subscription = new Subscription();
+    mustHideTitle: boolean = false;
 
 
-
-    constructor(private router: Router) { }
+    constructor(
+        private router: Router,
+        private pollService: PollService
+    ) { }
 
     ngOnInit(): void {
-        this.subscription = this.getArgumentOfRoutes();
+        this.title = titleOfPages[this.router.url];
+        this.subscription?.add(this.getArgumentOfRoutes());
+        this.subscription?.add(this.onMustHideTitle());
+
     }
 
     ngOnDestroy(): void {
@@ -36,4 +44,13 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
                 document.title = 'AppVotes - ' + title;
             });
     }
+
+    private onMustHideTitle() {
+        return this.pollService.mustHideTitle.subscribe(
+            {
+                next: (value) => this.mustHideTitle = value,
+                error: () => this.mustHideTitle = false
+            });
+    }
+
 }

@@ -3,11 +3,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CardComponent } from './components/card/card.component';
+import { CardVotesComponent } from './components/card-votes/card-votes.component';
 import { ListComponent } from './components/list/list.component';
-import { ModalVotesComponent } from './components/modal/modal-votes.component';
+import { ModalVotesComponent } from './components/modal-votes/modal-votes.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { ModalPollsComponent } from './components/modal-polls/modal-polls.component';
+import { CardPollComponent } from './components/card-polls/card-polls.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 
 
@@ -21,18 +24,24 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     exports: [
         NavbarComponent,
         FooterComponent,
-        CardComponent,
+        CardVotesComponent,
         ListComponent,
         ModalVotesComponent,
-        ErrorMessageComponent
+        ErrorMessageComponent,
+        CardPollComponent,
+        ModalPollsComponent,
+        PaginationComponent
     ],
     declarations: [
         NavbarComponent,
         FooterComponent,
-        CardComponent,
+        CardVotesComponent,
         ListComponent,
         ModalVotesComponent,
-        ErrorMessageComponent
+        ErrorMessageComponent,
+        CardPollComponent,
+        ModalPollsComponent,
+        PaginationComponent
     ],
     providers: [],
 })

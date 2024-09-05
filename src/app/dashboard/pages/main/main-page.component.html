@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center align-items-center gap-3" *ngIf="!mustShowPolls">
+
+
+    <button class="btn btn-primary animate__animated animate__bounceInDown " (click)="openModalPoll()">
+        Launch a poll
+        <i class="ms-2 fa-solid fa-square-poll-vertical"></i>
+    </button>
+
+    <button class="btn btn-secondary animate__animated animate__bounceInDown" (click)="getPolls()">
+        List polls
+        <i class="ms-2 fa-regular fa-eye"></i>
+    </button>
+
+</div>
+
+<div class="row justify-content-center" *ngIf="mustShowPolls">
+
+    <div class="d-flex justify-content-start mt-3">
+        <div class="button btn btn-primary d-flex justify-content-start" (click)="goBack()">&laquo; Regresar</div>
+    </div>
+
+
+    <div class="alert alert-warning text-center fw-bold" *ngIf="polls.length === 0 else pollsContainer">
+        There are not polls yet
+    </div>
+    <ng-template #pollsContainer>
+        <div class="col col-md-6 col-lg-3 shadow bg-light g-5 mx-3 rounded p-3" *ngFor="let poll of polls">
+            <shared-card-polls [poll]="poll"></shared-card-polls>
+        </div>
+    </ng-template>
+
+    <shared-pagination *ngIf="nextUrl || previousUrl" [currentPage]="currentPage" [nextUrl]="nextUrl"
+        [previousUrl]="previousUrl" [pagesNumber]="pagesNumber" (onEmitUrl)="getPolls($event)"></shared-pagination>
+
+</div>
+
+<shared-modal-polls *ngIf="isShowedModal"></shared-modal-polls>

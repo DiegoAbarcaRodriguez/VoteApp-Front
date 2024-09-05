@@ -8,8 +8,3 @@ export interface Vote {
 }
 
 
-
-export interface EmitionModalSettings {
-    optionVote?: Vote,
-    isShowedModal: boolean
-}

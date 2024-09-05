@@ -31,6 +31,10 @@ export class ValidatorService {
             if (errorName === 'hasBlankSpace') {
                 errors.push('Must not have blank spaces on the sideways!');
             }
+
+            if (errorName === 'isMinorOfZero') {
+                errors.push('The minimun is 3!');
+            }
         }
 
         return errors;
@@ -63,6 +67,16 @@ export class ValidatorService {
         }
 
         return undefined;
+    }
+
+    validateNumberOfParticipants(formControl: FormControl): ValidationErrors | undefined {
+        if (formControl.value < 3) {
+            return {
+                isMinorOfZero: true
+            }
+        }
+
+        return {};
     }
 
 }
