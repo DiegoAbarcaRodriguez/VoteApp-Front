@@ -30,6 +30,8 @@ export class MainPageComponent implements OnInit {
 
     ngOnInit() {
         this.onEmitClicOptionFromPoll();
+        this.onGetUpdatedPolls();
+        this.onGetDeletedPoll();
     }
 
     openModalPoll() {
@@ -64,6 +66,28 @@ export class MainPageComponent implements OnInit {
                 error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error!', error.error, 'error')
             });
     }
+
+    onGetUpdatedPolls() {
+        this.pollService.updatedPoll.subscribe({
+            next: (updatedVote) => {
+                this.polls = this.polls.map(poll => {
+                    if (poll._id === updatedVote._id) {
+                        poll = updatedVote
+                    }
+                    return poll;
+                });
+            }
+        });
+    }
+    onGetDeletedPoll() {
+        this.pollService.deletedPoll.subscribe({
+            next: (deletedPoll) => {
+                this.polls = this.polls.filter(poll => poll._id !== deletedPoll._id);
+            }
+        });
+    }
+
+
 
     goBack() {
         this.mustShowPolls = false;

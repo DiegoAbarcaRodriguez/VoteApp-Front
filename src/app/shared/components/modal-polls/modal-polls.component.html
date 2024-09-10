@@ -1,9 +1,9 @@
-<div class="modal-container w-50" #modalPolls>
+<div class="modal-container w-30" #modalPolls >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <span class="modal-title fw-bold text-black me-auto">
-                    Throw a new Poll
+                   {{!this.polltoEdit ? 'Throw a new Poll': 'Update your Poll'}} 
                 </span>
 
                 <div class="btn btn-close" (click)="closeModal()"></div>

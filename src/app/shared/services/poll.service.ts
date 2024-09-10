@@ -16,6 +16,8 @@ export class PollService {
     }
 
     private _mustHideTitle: Subject<boolean> = new Subject();
+    private _updatedPoll: Subject<Poll> = new Subject();
+    private _deletedPoll: Subject<Poll> = new Subject();
 
     get mustHideTitle(): Observable<boolean> {
         return this._mustHideTitle.asObservable();
@@ -23,6 +25,22 @@ export class PollService {
 
     set mustHideTitle(value: boolean) {
         this._mustHideTitle.next(value);
+    }
+
+    get updatedPoll(): Observable<Poll> {
+        return this._updatedPoll.asObservable();
+    }
+
+    set updatedPoll(value: Poll) {
+        this._updatedPoll.next(value);
+    }
+
+    get deletedPoll(): Observable<Poll> {
+        return this._deletedPoll.asObservable();
+    }
+
+    set deletedPoll(value: Poll) {
+        this._deletedPoll.next(value);
     }
 
     constructor(private http: HttpClient) { }
@@ -38,5 +56,13 @@ export class PollService {
     }
 
 
+    updatePoll(body: Poll): Observable<{ ok: boolean, poll: Poll }> {
+        return this.http.put<{ ok: boolean, poll: Poll }>(`${this._url}/api/poll/${body._id}`, body, { headers: this._getHeaders() })
+            .pipe(tap(({ poll }) => this.updatedPoll = poll))
+    }
+
+    deletePoll(_id: string): Observable<{ ok: boolean, poll: Poll }> {
+        return this.http.delete<{ ok: boolean, poll: Poll }>(`${this._url}/api/poll/${_id}`, { headers: this._getHeaders() })
+    }
 
 }

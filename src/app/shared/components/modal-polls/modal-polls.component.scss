@@ -1,0 +1,18 @@
+.w-30 {
+
+    @media (min-width:468px) {
+        width: 70%;
+    }
+
+    @media (min-width:768px) {
+        width: 30%;
+    }
+
+   
+
+    width: 90%;
+}
+
+.modal-container{
+    z-index: 5;
+}
