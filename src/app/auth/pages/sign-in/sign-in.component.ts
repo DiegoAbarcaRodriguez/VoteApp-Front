@@ -1,8 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { delay, pipe } from 'rxjs';
 import { RegularExpressions } from 'src/app/shared/helpers/regular-expressions.helper';
 import { LoginPayload } from 'src/app/shared/interfaces';
 import { PopUpAdaptador } from 'src/app/shared/plugin';
@@ -31,6 +30,7 @@ export class SignInComponent implements AfterViewInit {
         private zone: NgZone
     ) { }
 
+
     ngAfterViewInit(): void {
         this.googleInit();
     }
@@ -48,7 +48,6 @@ export class SignInComponent implements AfterViewInit {
     }
 
     handleCredentialResponse(response: any) {
-        console.log("Encoded JWT ID token: " + response.credential);
 
         this.authService.loginGoogle(response.credential)
             .subscribe({

@@ -9,9 +9,9 @@
 
 <div class="d-flex align-items-center justify-content-around my-3">
     <button class="btn border">
-        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        <i class="fa-solid fa-arrow-up-from-bracket" (click)="onCopyCode()"></i>
     </button>
-    <button class="btn border">
+    <button class="btn border" (click)="onSeeDetailsPoll()">
         <i class="fa-regular fa-eye"></i>
     </button>
     <button class="btn border" (click)="onEditPoll()">
@@ -22,3 +22,5 @@
     </button>
 
 </div>
+
+<shared-snackbar *ngIf="mustShowSnackBar" (onMustShowSnackBar)="mustShowSnackBar = $event">

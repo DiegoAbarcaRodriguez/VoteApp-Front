@@ -1,12 +1,14 @@
 <shared-navbar *ngIf="title !== 'What do you wanna do?'"></shared-navbar>
 
-<div class="container" [ngClass]="{'dashboard':!mustHideTitle,'dashboard-expand mb-4': mustHideTitle}">
-    <div class="row">
-        <h1 class="display-4 fw-bold text-black text-center animate__animated animate__bounceInDown"
-            *ngIf="!mustHideTitle">{{title}}</h1>
-        <router-outlet></router-outlet>
+<div class="d-flex flex-column gap-5">
+    <div class="container flex-grow-1" [ngClass]="{'dashboard':!mustHideTitle,'dashboard-expand mb-4': mustHideTitle}">
+        <div class="row align-items-center">
+            <h1 class="display-4 fw-bold text-black text-center animate__animated animate__bounceInDown"
+                *ngIf="!mustHideTitle">{{title}}</h1>
+            <router-outlet></router-outlet>
 
+        </div>
     </div>
-</div>
 
-<shared-footer></shared-footer>
+    <shared-footer></shared-footer>
+</div>

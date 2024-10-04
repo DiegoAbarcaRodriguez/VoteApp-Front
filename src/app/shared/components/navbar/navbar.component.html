@@ -6,9 +6,8 @@
         <span class="me-md-5 text-white display-6 fw-bold" routerLink="main">Voting App</span>
 
         <nav class="d-flex flex-column align-items-center flex-md-row my-2 my-md-0">
-            <a routerLinkActive="active" routerLink="chart" class="text-decoration-none me-md-3">Chart</a>
-            <a routerLinkActive="active" routerLink="vote" class="text-decoration-none me-md-3">Vote</a>
-            <a routerLinkActive="active" routerLink="settings" class="text-decoration-none me-md-3">Settings</a>
+            <a routerLinkActive="active" [routerLink]="['chart',pollId]" class="text-decoration-none me-md-3">Chart</a>
+            <a routerLinkActive="active" [routerLink]="['settings',pollId]" class="text-decoration-none me-md-3">Settings</a>
         </nav>
 
     </div>

@@ -1,14 +1,15 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { filter, switchMap } from 'rxjs';
-import { ErrorMessages } from 'src/app/shared/enums/error.enum';
+import { switchMap } from 'rxjs';
 import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
 import { RespondImageServer } from 'src/app/shared/interfaces';
 import { Vote } from 'src/app/shared/interfaces/vote.interface';
 import { PopUpAdaptador } from 'src/app/shared/plugin';
-import { environments } from 'src/environments/environment';
 import { ModalService } from '../../services/modal.service';
+import { ImageService } from '../../services/image.service';
+import { VotesService } from '../../services/votes.service';
+import { PollService } from '../../services/poll.service';
 
 
 
@@ -21,9 +22,6 @@ export class ModalVotesComponent implements OnInit {
 
     @Input()
     vote?: Vote;
-
-    @ViewChild('modalVotes')
-    modalContainer?: ElementRef<HTMLDivElement>;
 
     form?: FormGroup;
     temporalImage: any;
@@ -40,7 +38,9 @@ export class ModalVotesComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private modalService: ModalService,
-        private http: HttpClient,
+        private imageService: ImageService,
+        private voteService: VotesService,
+        private pollService: PollService
     ) { }
 
     ngOnInit(): void {
@@ -65,10 +65,10 @@ export class ModalVotesComponent implements OnInit {
         }
     }
 
-  
+
 
     closeModal() {
-        new DomModalHelper(this.modalService).removeSCSSClassesModal(this.modalContainer!);
+        new DomModalHelper(this.modalService).removeSCSSClassesModal();
     }
 
     changeImage(file: File) {
@@ -107,17 +107,16 @@ export class ModalVotesComponent implements OnInit {
 
     private createOptionToVote() {
 
-        this.http.post(`${environments.imagesServerUrl}/upload`, this.formData)
-            .pipe(filter((resp: any) => resp.ok))
-            .pipe(switchMap(({ imageName }: RespondImageServer) => this.http.post(`${environments.baseUrl}/api/optionVote`, { ...this.form?.value, img: imageName })))
+        this.imageService.createImage(this.formData)
+            .pipe(switchMap(({ imageName }: RespondImageServer) => this.voteService.addVoteOption({ ...this.form?.value, img: imageName, poll_id: this.pollService.poll_id })))
             .subscribe({
                 next: () => {
                     PopUpAdaptador.generatePopUp('Success', 'The option has been created succesfully', 'success');
                     this.closeModal();
 
                 },
-                error: (error: HttpErrorResponse) => {
-                    PopUpAdaptador.generatePopUp('Error', ErrorMessages[error.status], 'error');
+                error: ({ error }: HttpErrorResponse) => {
+                    PopUpAdaptador.generatePopUp('Error', error.error, 'error');
                     this.closeModal();
                 }
             });
@@ -128,30 +127,29 @@ export class ModalVotesComponent implements OnInit {
 
 
         if (this.imageToUpload) {
-            this.http.put<RespondImageServer>(`${environments.imagesServerUrl}/update/${this.vote?._id}`, this.formData)
-                .pipe(switchMap(({ imageName }: RespondImageServer) => this.http.put(`${environments.baseUrl}/api/optionVote/${this.vote!._id}`, { ...this.form?.value, img: imageName })))
+            this.imageService.updateImage(this.vote!._id, this.formData)
+                .pipe(switchMap(({ imageName }: RespondImageServer) => this.voteService.updateVoteOption(this.vote!._id, { ...this.form?.value, img: imageName })))
                 .subscribe(
                     {
                         next: () => {
                             PopUpAdaptador.generatePopUp('Success', 'The option has been updated succesfully', 'success');
                             this.closeModal();
                         },
-                        error: (error: HttpErrorResponse) => {
-                            PopUpAdaptador.generatePopUp('Error', ErrorMessages[error.status], 'error');
+                        error: ({ error }: HttpErrorResponse) => {
+                            PopUpAdaptador.generatePopUp('Error', error.error, 'error');
                             this.closeModal();
                         }
                     });
         } else {
-
-            this.http.put(`${environments.baseUrl}/api/optionVote/${this.vote!._id}`, { ...this.form?.value, img: undefined })
+            this.voteService.updateVoteOption(this.vote!._id, { ...this.form?.value, img: undefined })
                 .subscribe(
                     {
                         next: () => {
                             PopUpAdaptador.generatePopUp('Success', 'The option has been updated succesfully', 'success');
                             this.closeModal();
                         },
-                        error: (error: HttpErrorResponse) => {
-                            PopUpAdaptador.generatePopUp('Error', ErrorMessages[error.status], 'error');
+                        error: ({ error }: HttpErrorResponse) => {
+                            PopUpAdaptador.generatePopUp('Error', error.error, 'error');
                             this.closeModal();
                         }
                     });
@@ -160,6 +158,6 @@ export class ModalVotesComponent implements OnInit {
 
     }
 
-    
+
 
 }

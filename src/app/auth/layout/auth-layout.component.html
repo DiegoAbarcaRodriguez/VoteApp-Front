@@ -1,11 +1,14 @@
 <div class="layout">
-    <div class="container mb-3 ">
+    <div class="container" [class.m-5]="!mustShowButtonAccessCode">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-               <router-outlet></router-outlet>
+            <div [ngClass]="{'col-md-6 offset-md-3':mustShowButtonAccessCode}">
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>
 
+    <shared-access-button class="" *ngIf="mustShowButtonAccessCode" (click)="launchPopUpAccesCode()"></shared-access-button>
     <shared-footer></shared-footer>
 </div>
+
+<shared-modal-access-code *ngIf="mustShowModal"></shared-modal-access-code>

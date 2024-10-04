@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { ValidateComponent } from './pages/validate-account/validate-account.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VotePageComponent } from './pages/vote/vote.component';
 
 
 
@@ -25,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         AuthLayoutComponent,
         ForgetPasswordComponent,
         RecoverPasswordComponent,
-        ValidateComponent
+        ValidateComponent,
+        VotePageComponent
     ],
     providers: [],
 })

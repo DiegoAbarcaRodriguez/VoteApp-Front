@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Vote } from '../../interfaces/vote.interface';
-import { VotesService } from 'src/app/shared/services/votes.service';
-import { catchError, delay, map, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorMessages } from '../../enums/error.enum';
-import { PopUpAdaptador } from '../../plugin';
+import { AuthService } from '../../services/auth.service';
+import { PollService } from '../../services/poll.service';
 
 
 @Component({
@@ -13,60 +10,49 @@ import { PopUpAdaptador } from '../../plugin';
 })
 export class ListComponent implements OnInit {
 
-    public isLoading: boolean = true;
+    @Input()
+    isLoading: boolean = true;
+    @Input()
     optionsToVote: Vote[] = [];
 
     constructor(
-        private votesService: VotesService,
+        private pollService: PollService,
+        private authService: AuthService
     ) { }
 
     ngOnInit(): void {
-        this.getOptionsToVote();
         this.connectToWebSockets();
     }
-
-
-    private getOptionsToVote() {
-        this.isLoading = true;
-        this.votesService.getVoteOptions()
-            .pipe(
-                delay(1000),
-                map((votes: Vote[]) => votes.map(vote => ({ ...vote, img: `http://localhost:3030/api/image/${vote.img}` })))
-            )
-            .subscribe(({
-                next: (votes: Vote[]) => {
-                    this.isLoading = false;
-                    this.optionsToVote = votes;
-                },
-                error: (error: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error', ErrorMessages[error.status], 'error')
-            }));
-
-    }
-
 
     private connectToWebSockets() {
 
         const socket = new WebSocket('ws://localhost:3000/ws');
 
         socket.onmessage = (event) => {
-            const { type, payload } = JSON.parse(event.data);
+            const { type, payload, email, poll_id } = JSON.parse(event.data);
 
             switch (type) {
                 case 'create-option-vote':
-                    const newPayload = { ...payload, img: `http://localhost:3030/api/image/${payload.img}` }
-                    this.optionsToVote.push(newPayload);
+                    if (poll_id === this.pollService.poll_id || email === this.authService.user?.email) {
+                        const newPayload = { ...payload, img: `http://localhost:3030/api/image/${payload.img}` }
+                        this.optionsToVote.push(newPayload);
+                    }
                     break;
                 case 'update-option-vote':
-                    this.optionsToVote = this.optionsToVote.map(vote => {
-                        if (vote._id === payload._id) {
-                            vote = payload;
-                            vote.img = `http://localhost:3030/api/image/${payload.img}`;
-                        }
-                        return vote;
-                    })
+                    if (poll_id === this.pollService.poll_id || email === this.authService.user?.email) {
+                        this.optionsToVote = this.optionsToVote.map(vote => {
+                            if (vote._id === payload._id) {
+                                vote = payload;
+                                vote.img = `http://localhost:3030/api/image/${payload.img}`;
+                            }
+                            return vote;
+                        });
+                    }
                     break;
                 case 'delete-option-vote':
-                    this.optionsToVote = this.optionsToVote.filter(vote => vote._id != payload._id);
+                    if (poll_id === this.pollService.poll_id || email === this.authService.user?.email) {
+                        this.optionsToVote = this.optionsToVote.filter(vote => vote._id != payload._id);
+                    }
                     break;
 
                 default:

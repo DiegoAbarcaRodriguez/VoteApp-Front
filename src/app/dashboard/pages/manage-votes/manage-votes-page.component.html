@@ -1,7 +1,10 @@
-<shared-list></shared-list>
+<div>
+    <shared-list [isLoading]="isLoading" [optionsToVote]="optionsToVote"></shared-list>
+
+    <div class="d-flex justify-content-end " (click)="onClicAddOptionVote()">
+        <div class="btn btn-success fw-bold">Add Option</div>
+    </div>
+</div>
+
 
 <manage-votes-modal [vote]="optionVoteClicked" *ngIf="isShowedModal"></manage-votes-modal>
-
-<div class="d-flex justify-content-end mt-3" (click)="onClicAddOptionVote()">
-    <div class="btn btn-success fw-bold">Add Option</div>
-</div>

@@ -6,11 +6,14 @@ import { RouterModule } from '@angular/router';
 import { CardVotesComponent } from './components/card-votes/card-votes.component';
 import { ListComponent } from './components/list/list.component';
 import { ModalVotesComponent } from './components/modal-votes/modal-votes.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { ModalPollsComponent } from './components/modal-polls/modal-polls.component';
 import { CardPollComponent } from './components/card-polls/card-polls.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { SnackBarComponent } from './components/snackbar/snackbar.component';
+import { AccessButtonComponent } from './components/access-button/access-button.component';
+import { ModalAccessCodeComponent } from './components/modal-access-code/modal-access-code.component';
 
 
 
@@ -19,6 +22,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     imports: [
         CommonModule,
         RouterModule,
+        FormsModule,
         ReactiveFormsModule
     ],
     exports: [
@@ -30,7 +34,10 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         ErrorMessageComponent,
         CardPollComponent,
         ModalPollsComponent,
-        PaginationComponent
+        PaginationComponent,
+        SnackBarComponent,
+        AccessButtonComponent,
+        ModalAccessCodeComponent
     ],
     declarations: [
         NavbarComponent,
@@ -41,7 +48,10 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         ErrorMessageComponent,
         CardPollComponent,
         ModalPollsComponent,
-        PaginationComponent
+        PaginationComponent,
+        SnackBarComponent,
+        AccessButtonComponent,
+        ModalAccessCodeComponent
     ],
     providers: [],
 })

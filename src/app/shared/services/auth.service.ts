@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { environments } from 'src/environments/environment';
-import { catchError, delay, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap, Subject } from 'rxjs';
 import { LoginPayload, LoginResponse, RegisterPayload, UpdatePasswordPayload, User } from '../interfaces';
 
 declare const google: any;
@@ -11,19 +10,35 @@ declare const google: any;
 export class AuthService {
 
     private _url = `${environments.baseUrl}/api/user`;
-    private _user?: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : false;
-
+    private _user?: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : undefined;
+    private _pollIdVoted$: Subject<string> = new Subject<string>();
+    private _pollIdVote: string = '';
 
     get user(): User | undefined {
         return this._user;
     }
 
+    get pollIdVotedAsObservable(): Observable<string> {
+        return this._pollIdVoted$.asObservable();
+    }
 
+    get pollIdVoted(): string {
+        return this._pollIdVote;
+    }
+
+    set pollIdVoted(value: string) {
+        localStorage.setItem('poll_id_voted', value);
+        this._pollIdVote = value;
+        this._pollIdVoted$.next(value);
+    }
 
     constructor(
-        private http: HttpClient,
-        private router: Router
-    ) { }
+        private http: HttpClient
+    ) {
+        this.pollIdVoted = localStorage.getItem('poll_id_voted') || '';
+    }
+
+
 
 
     login(body: LoginPayload): Observable<LoginResponse> {
@@ -55,16 +70,21 @@ export class AuthService {
         return this.http.put(`${this._url}/update-password`, body)
     }
 
-    logout() {
+    logout(): Observable<any> {
 
-        if (this._user?.google) {
-            google.accounts.id.revoke(this.user!.email, () => {
-            });;
-        }
+        return this.http.put(`${this._url}/close-user-session`, { email: this._user!.email }).pipe(
+            tap(() => {
+                if (this._user?.google) {
+                    google.accounts.id.revoke(this.user!.email, () => {
+                    });;
+                }
 
-        
-        localStorage.clear();
-        this.router.navigateByUrl('/sign-up');
+                this._user!.isActive = false;
+                localStorage.clear();
+
+            }));
+
+
     }
 
     loginGoogle(accessToken: string) {

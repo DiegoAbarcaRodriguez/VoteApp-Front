@@ -1,7 +1,8 @@
 export interface Poll {
     title: string,
     description: string,
-    numberOfParticipants: number
+    numberOfParticipants: number,
+    numberOfParticipations?: number,
     user_id?: string,
     _id?: string
 }
@@ -12,7 +13,7 @@ export interface ResponsePollGet {
     polls: Poll[];
     next: string;
     previous: string;
-    page:number;
+    page: number;
 }
 
 

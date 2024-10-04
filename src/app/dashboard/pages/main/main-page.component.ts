@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
 import { Poll } from 'src/app/shared/interfaces/poll.interface';
 import { PopUpAdaptador } from 'src/app/shared/plugin';
@@ -25,7 +24,6 @@ export class MainPageComponent implements OnInit {
     constructor(
         private modalService: ModalService,
         private pollService: PollService,
-        private router: Router
     ) { }
 
     ngOnInit() {

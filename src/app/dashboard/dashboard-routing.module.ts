@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VotesPageComponent } from './pages/votes/votes.component';
 import { ChartPageComponent } from './pages/chart/chart-page.component';
 import { ManageVotesPageComponent } from './pages/manage-votes/manage-votes-page.component';
 import { MainPageComponent } from './pages/main/main-page.component';
@@ -14,21 +13,14 @@ const routes: Routes = [
         }
     },
     {
-        path: 'vote',
-        component: VotesPageComponent,
-        data: {
-            title: 'Vote'
-        }
-    },
-    {
-        path: 'chart',
+        path: 'chart/:poll_id',
         component: ChartPageComponent,
         data: {
             title: 'Chart'
         }
     },
     {
-        path: 'settings',
+        path: 'settings/:poll_id',
         component: ManageVotesPageComponent,
         data: {
             title: 'Settings'

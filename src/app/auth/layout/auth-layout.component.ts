@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
+import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
     templateUrl: 'auth-layout.component.html',
@@ -7,11 +9,27 @@ import { Router } from '@angular/router';
 })
 
 export class AuthLayoutComponent implements OnInit {
-    currentUrl: string = '';
 
-    constructor(private router: Router) { }
+    mustShowModal: boolean = false;
+    mustShowButtonAccessCode: boolean = true;
+
+    constructor(
+        private modalService: ModalService
+    ) { }
 
     ngOnInit() {
-        this.currentUrl = this.router.url;
+        
+        this.modalService.onShowButtonAccessCode.subscribe({
+            next: (mustShow) => this.mustShowButtonAccessCode = mustShow
+        });
+
+        this.modalService.onShowModal.subscribe({
+            next: (resp) => this.mustShowModal = resp
+        });
+    }
+
+    launchPopUpAccesCode() {
+        new DomModalHelper(this.modalService).insertSCSSClassesModal(true);
+        this.mustShowModal = true;
     }
 }

@@ -2,9 +2,10 @@
 export interface Vote {
     title: string,
     img?: string,
-    _id: number,
+    _id: string,
     description: string,
-    amount?: number
+    amount?: number,
+    poll_id: string
 }
 
 

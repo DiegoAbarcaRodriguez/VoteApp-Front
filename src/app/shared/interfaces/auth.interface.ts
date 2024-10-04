@@ -30,5 +30,6 @@ export interface User {
     validated: boolean,
     token?: string
     google: boolean,
-    name: string
+    name: string,
+    isActive: boolean
 }

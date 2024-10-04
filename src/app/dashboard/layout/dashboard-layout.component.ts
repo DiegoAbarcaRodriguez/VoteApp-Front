@@ -21,10 +21,9 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.title = titleOfPages[this.router.url];
+        this.title = titleOfPages[this.router.url.split('/').at(2)!];
         this.subscription?.add(this.getArgumentOfRoutes());
         this.subscription?.add(this.onMustHideTitle());
-
     }
 
     ngOnDestroy(): void {

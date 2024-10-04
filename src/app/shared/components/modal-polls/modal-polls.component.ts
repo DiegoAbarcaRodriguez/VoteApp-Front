@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DomModalHelper } from '../../helpers/dom-modal.helper';
 import { ModalService } from '../../services/modal.service';
@@ -20,9 +20,6 @@ export class ModalPollsComponent implements OnInit {
 
     @Input()
     polltoEdit?: Poll;
-
-    @ViewChild('modalPolls')
-    modalContainer?: ElementRef<HTMLDivElement>;
 
     form = this.fb.group({
         title: ['', [Validators.required, Validators.minLength(3)]],
@@ -51,7 +48,7 @@ export class ModalPollsComponent implements OnInit {
     }
 
     closeModal() {
-        new DomModalHelper(this.modalService).removeSCSSClassesModal(this.modalContainer!);
+        new DomModalHelper(this.modalService).removeSCSSClassesModal();
     }
 
     onSubmitForm() {
@@ -66,7 +63,7 @@ export class ModalPollsComponent implements OnInit {
                 .subscribe({
                     next: ({ message }) => {
                         PopUpAdaptador.generatePopUp('Success!', message, 'success');
-                        new DomModalHelper(this.modalService).removeSCSSClassesModal(this.modalContainer!);
+                        new DomModalHelper(this.modalService).removeSCSSClassesModal();
                     },
                     error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error!', error.error, 'error')
                 });
@@ -75,7 +72,7 @@ export class ModalPollsComponent implements OnInit {
                 .subscribe({
                     next: () => {
                         PopUpAdaptador.generatePopUp('Success!', 'The poll has been updated succesfully!', 'success');
-                        new DomModalHelper(this.modalService).removeSCSSClassesModal(this.modalContainer!);
+                        new DomModalHelper(this.modalService).removeSCSSClassesModal();
                     },
                     error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error!', error.error, 'error')
 

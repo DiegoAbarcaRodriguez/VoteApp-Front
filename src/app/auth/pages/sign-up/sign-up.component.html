@@ -20,7 +20,7 @@
       
         <div class="form__field mb-3">
             <label for="email" class="form-label">Email</label>
-            <input id="email" type="text" class="form-control" placeholder="m@example.com" formControlName="email">
+            <input id="email" type="email" class="form-control" placeholder="m@example.com" formControlName="email">
             <shared-error-message [form]="form" field="email" [errors]="form.get('email')?.errors || {}"></shared-error-message>
         </div>
 

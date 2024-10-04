@@ -7,11 +7,16 @@
         <div class="card-text">{{optionToVote?.description}}</div>
     </div>
 
-    <div class="btn btn-primary fw-bold" *ngIf="currentUrl === '/dashboard/vote';else buttons" (click)="onVote()">VOTE</div>
+    <div class="btn btn-primary fw-bold" [class.disabled]="haveVoted ||hasEnded"
+        [ngStyle]="{cursor:haveVoted || hasEnded ? 'not-allowed':'pointer'}"
+        *ngIf="currentUrl?.includes('/vote');else buttons" (click)="onVote()">
+        VOTE
+    </div>
 
     <ng-template #buttons>
         <div class="d-flex gap-3">
-            <button class="btn btn-info flex-grow-1 text-white fw-bold" (click)="onClicButton(optionToVote)">Edit</button>
+            <button class="btn btn-info flex-grow-1 text-white fw-bold"
+                (click)="onClicButton(optionToVote)">Edit</button>
             <button class="btn btn-danger flex-grow-1 fw-bold" (click)="onDelete()">Delete</button>
         </div>
     </ng-template>
