@@ -16,9 +16,18 @@ import { VotesService } from 'src/app/shared/services/votes.service';
     styles: [
         `.container-chart{
             margin:10px auto;
-            width:300px;
+            width:90%;
             height:300px;
-        }`
+           
+        }
+
+        canvas {
+            width:400px;
+            
+        }
+        `
+
+        
     ]
 
 })

@@ -21,6 +21,7 @@ export class PollService {
     private _updatedPoll: Subject<Poll> = new Subject();
     private _deletedPoll: Subject<Poll> = new Subject();
     private _poll_id?: string = localStorage.getItem('poll_id') || undefined;
+    private _onChangePoll_id: Subject<boolean> = new Subject();
 
     get mustHideTitle(): Observable<boolean> {
         return this._mustHideTitle.asObservable();
@@ -52,6 +53,14 @@ export class PollService {
 
     set poll_id(value: string) {
         this._poll_id = value;
+    }
+
+    get onChangePoll_id(): Observable<boolean> {
+        return this._onChangePoll_id.asObservable();
+    }
+
+    set onChangePoll_id(value: boolean) {
+        this._onChangePoll_id.next(value);
     }
 
     constructor(private http: HttpClient) { }

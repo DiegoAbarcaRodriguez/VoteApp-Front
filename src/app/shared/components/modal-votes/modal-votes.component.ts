@@ -16,6 +16,14 @@ import { PollService } from '../../services/poll.service';
 @Component({
     selector: 'manage-votes-modal',
     templateUrl: 'modal-votes.component.html',
+    styles: [`
+        .custom-width{
+            width:100%;
+            @media(min-width:768px){
+                width:auto;
+            }
+        }
+        `]
 })
 
 export class ModalVotesComponent implements OnInit {
@@ -68,7 +76,7 @@ export class ModalVotesComponent implements OnInit {
 
 
     closeModal() {
-        new DomModalHelper(this.modalService).removeSCSSClassesModal();
+        new DomModalHelper(this.modalService).removeSCSSClassesModal(false, true);
     }
 
     changeImage(file: File) {
@@ -112,6 +120,7 @@ export class ModalVotesComponent implements OnInit {
             .subscribe({
                 next: () => {
                     PopUpAdaptador.generatePopUp('Success', 'The option has been created succesfully', 'success');
+                    this.pollService.onChangePoll_id = true;
                     this.closeModal();
 
                 },

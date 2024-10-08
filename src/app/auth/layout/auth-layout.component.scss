@@ -2,14 +2,25 @@
 
 
 .layout {
-    height:100%;
+
+    width: 100vw;
 
     @media(min-width: 468px) {
         width: 100%;
     }
 
-    width: fit-content;
-   
+
+    &-content {
+        height: auto;
+        display: grid;
+    }
+
+    &-no-options{
+        height: 84vh;
+    }
 
 }
 
+.place-items-center {
+    place-items: center;
+}

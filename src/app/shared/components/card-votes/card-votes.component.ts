@@ -4,17 +4,18 @@ import { Router } from '@angular/router';
 import { DomModalHelper } from '../../helpers/dom-modal.helper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PopUpAdaptador } from '../../plugin';
-import { filter, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { ModalService } from '../../services/modal.service';
 import { ImageService } from '../../services/image.service';
 import { VotesService } from '../../services/votes.service';
 import { PollService } from '../../services/poll.service';
-import { AuthService } from '../../services/auth.service';
+import { ParticipantService } from '../../services/participant.service';
 
 
 @Component({
     selector: 'shared-card-votes',
-    templateUrl: 'card-votes.component.html'
+    templateUrl: 'card-votes.component.html',
+    styleUrls: ['card-votes.component.scss']
 })
 
 export class CardVotesComponent implements OnInit {
@@ -22,8 +23,6 @@ export class CardVotesComponent implements OnInit {
     @Input()
     optionToVote?: Vote;
     currentUrl?: string;
-    haveVoted: boolean = false;
-    hasEnded: boolean = false;
 
     constructor(
         private router: Router,
@@ -31,26 +30,14 @@ export class CardVotesComponent implements OnInit {
         private imageService: ImageService,
         private voteService: VotesService,
         private pollService: PollService,
-        private authService: AuthService
+        private participantService: ParticipantService
     ) { }
 
 
 
 
-
-
     ngOnInit() {
-
-        this.authService.pollIdVotedAsObservable.subscribe({
-            next: (pollIdVoted) => {
-                this.haveVoted = pollIdVoted === this.pollService.poll_id;
-
-            }
-        });
-
-        this.haveVoted = this.authService.pollIdVoted === this.pollService.poll_id;
         this.currentUrl = this.router.url;
-
     }
 
 
@@ -64,24 +51,19 @@ export class CardVotesComponent implements OnInit {
     onVote() {
         const newAmount = this.optionToVote?.amount! + 1;
 
-        this.pollService.plusOneNumberOfParticipations(this.pollService.poll_id!)
+        this.participantService.executeParticipation(this.pollService.poll_id!, this.participantService.userName)
             .pipe(
-                filter(({ ok }) => ok),
+                switchMap(() => this.pollService.plusOneNumberOfParticipations(this.pollService.poll_id!)),
                 switchMap(() => this.voteService.incrementAmountOfVotes(this.optionToVote!._id, newAmount))
             )
             .subscribe({
                 next: ({ voteEntity }) => {
                     PopUpAdaptador.generatePopUp('Success', `The option ${this.optionToVote?.title} has been voted`, 'success');
                     this.optionToVote!.amount = voteEntity.amount;
+
                 },
                 error: ({ error }: HttpErrorResponse) => {
-                    if (error.error === 'The poll has ended!') {
-                        this.hasEnded = true;
-                    }
                     PopUpAdaptador.generatePopUp('Error', error.error, 'error');
-                },
-                complete: () => {
-                    this.authService.pollIdVoted = this.pollService.poll_id!;
                 }
             });
     }

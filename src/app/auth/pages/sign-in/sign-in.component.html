@@ -12,7 +12,7 @@
 
     <form class="form mt-3" [formGroup]="form" (ngSubmit)="login()">
         <div class="form__field mb-3">
-            <label for="user" class="form-label">Email / User Name</label>
+            <label for="user" class="form-label">Email</label>
             <input id="user" type="text" class="form-control" placeholder="m@example.com" formControlName="user">
             <shared-error-message [form]="form" field="user" [errors]="form.get('user')?.errors || {}"></shared-error-message>
         </div>

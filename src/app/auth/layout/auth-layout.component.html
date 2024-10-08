@@ -1,5 +1,7 @@
+<shared-navbar [isFromDashboard]="false" *ngIf="currentUrl?.includes('/vote')"></shared-navbar>
+
 <div class="layout">
-    <div class="container" [class.m-5]="!mustShowButtonAccessCode">
+    <div class="container" [ngClass]="{'mx-0 mx-md-5 my-2 layout-content':!mustShowButtonAccessCode,'place-items-center layout-no-options':!isThereOptionToVote && currentUrl?.includes('/vote')}">
         <div class="row">
             <div [ngClass]="{'col-md-6 offset-md-3':mustShowButtonAccessCode}">
                 <router-outlet></router-outlet>
@@ -7,8 +9,11 @@
         </div>
     </div>
 
-    <shared-access-button class="" *ngIf="mustShowButtonAccessCode" (click)="launchPopUpAccesCode()"></shared-access-button>
+    <shared-access-button class="" *ngIf="mustShowButtonAccessCode"
+        (click)="launchPopUpAccesCode()"></shared-access-button>
     <shared-footer></shared-footer>
 </div>
 
-<shared-modal-access-code *ngIf="mustShowModal"></shared-modal-access-code>
+
+<shared-modal-access-code *ngIf="mustShowModal" [isAccessCode]="true"></shared-modal-access-code>
+<shared-modal-access-code *ngIf="mustShowModal" [isAccessCode]="false"></shared-modal-access-code>

@@ -63,9 +63,8 @@ export class SignInComponent implements AfterViewInit {
             return;
         }
 
-        let isByEmail = RegularExpressions.email.test(this.form.value.user!)
 
-        this.authService.login({ ...this.form.value, isByEmail } as LoginPayload)
+        this.authService.login({ user: this.form.value.user?.toLocaleLowerCase(), password: this.form.value.password } as LoginPayload)
             .subscribe({
                 next: () => this.zone.run(() => this.router.navigateByUrl('/dashboard/main')),
                 error: ({ error }: HttpErrorResponse) => PopUpAdaptador.generatePopUp('Error', error.error, 'error')

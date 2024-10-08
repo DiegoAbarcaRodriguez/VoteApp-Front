@@ -1,19 +1,37 @@
-<div class="header bg-black d-flex justify-content-between align-items-center p-3 flex-column flex-md-row ">
+<div [class.mb-4]="isFromDashboard && !mustShowGoBackOptions" class="custom-width rounded bg-primary d-flex justify-content-between align-items-center p-2 flex-column flex-md-row">
 
 
-    <div class=" d-flex align-items-center flex-column flex-md-row">
+    <span class="me-md-5 text-white fs-4 fw-bold" routerLink="main">Voting App</span>
 
-        <span class="me-md-5 text-white display-6 fw-bold" routerLink="main">Voting App</span>
 
-        <nav class="d-flex flex-column align-items-center flex-md-row my-2 my-md-0">
-            <a routerLinkActive="active" [routerLink]="['chart',pollId]" class="text-decoration-none me-md-3">Chart</a>
-            <a routerLinkActive="active" [routerLink]="['settings',pollId]" class="text-decoration-none me-md-3">Settings</a>
+
+    <div class="d-flex align-items-center flex-column flex-md-row">
+
+        <nav *ngIf="isFromDashboard && title !== 'What do you wanna do?'" class="d-flex flex-column justify-content-around align-items-center flex-md-row gap-md-5" >
+            <a  routerLinkActive="active" [routerLink]="['chart',pollId]" class="text-decoration-none text-white mb-2 mb-md-0"><i
+                    class="fa-solid fa-chart-simple"></i> Chart</a>
+            <a routerLinkActive="active" [routerLink]="['settings',pollId]"
+                class="text-decoration-none me-md-3 text-white mb-2 mb-md-0"><i class="fa-solid fa-gear"></i> Settings</a>
         </nav>
 
+        <span *ngIf="!isFromDashboard || mustShowGoBackOptions" class="text-white me-md-4 mb-2 mb-md-0" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Regresar</span>
+
+        <div *ngIf="isFromDashboard" class="nav-item dropdown ms-3">
+            <span class="nav-link dropdown-toggle text-white" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" >
+                <i class="fa-regular fa-user"></i> {{userName}}
+            </span>
+            <div class="dropdown-menu" >
+                <p class="text-dark text-center fw-bold border-bottom">My Account</p>
+                <span class="dropdown-item text-dark" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket "></i> Log out</span>
+            </div>
+        </div>
+
+        <span *ngIf="!isFromDashboard" class="text-white" >
+            <i class="fa-regular fa-user"></i> {{userName}}
+        </span>
+        
+    
     </div>
 
-    <div class="rounded login-options bg-white p-2 mt-2 mt-md-0">
-        <button (click)="logout()">Log out</button>
 
-    </div>
 </div>

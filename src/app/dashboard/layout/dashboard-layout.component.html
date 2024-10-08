@@ -1,7 +1,8 @@
-<shared-navbar *ngIf="title !== 'What do you wanna do?'"></shared-navbar>
+<shared-navbar [isFromDashboard]="true" [title]="title"></shared-navbar>
 
-<div class="d-flex flex-column gap-5">
-    <div class="container flex-grow-1" [ngClass]="{'dashboard':!mustHideTitle,'dashboard-expand mb-4': mustHideTitle}">
+<div class="d-flex flex-column justify-content-between h-92">
+    <div class="container-fluid flex-grow-1 mb-4  mb-md-0"
+        [ngClass]="{'place-items-center':(!mustHideTitle  && !isThereOptionToVote) || (!mustHideTitle && title==='What do you wanna do?')}">
         <div class="row align-items-center">
             <h1 class="display-4 fw-bold text-black text-center animate__animated animate__bounceInDown"
                 *ngIf="!mustHideTitle">{{title}}</h1>

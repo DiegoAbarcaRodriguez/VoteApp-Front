@@ -1,8 +1,20 @@
+.custom-width {
+    width: 100vw;
+
+    @media(min-width: 768px) {
+        width: auto;
+    }
+}
+
+span {
+    cursor: pointer;
+}
+
 a {
-    color: rgba(255, 255, 255, 0.699);
+    color: rgba(255, 255, 255, 0.913) !important;
 }
 
 .active,
 a:hover {
-    color: white;
+    color: rgb(255, 255, 255) !important;
 }

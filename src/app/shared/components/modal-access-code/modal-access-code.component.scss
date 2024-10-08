@@ -1,0 +1,7 @@
+.width-custom {
+    width: 90%;
+
+    @media(min-width: 700px) {
+        width: 75%;
+    }
+}

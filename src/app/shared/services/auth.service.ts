@@ -11,32 +11,15 @@ export class AuthService {
 
     private _url = `${environments.baseUrl}/api/user`;
     private _user?: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : undefined;
-    private _pollIdVoted$: Subject<string> = new Subject<string>();
-    private _pollIdVote: string = '';
+
 
     get user(): User | undefined {
         return this._user;
     }
 
-    get pollIdVotedAsObservable(): Observable<string> {
-        return this._pollIdVoted$.asObservable();
-    }
-
-    get pollIdVoted(): string {
-        return this._pollIdVote;
-    }
-
-    set pollIdVoted(value: string) {
-        localStorage.setItem('poll_id_voted', value);
-        this._pollIdVote = value;
-        this._pollIdVoted$.next(value);
-    }
-
     constructor(
         private http: HttpClient
-    ) {
-        this.pollIdVoted = localStorage.getItem('poll_id_voted') || '';
-    }
+    ) { }
 
 
 
@@ -45,7 +28,7 @@ export class AuthService {
         return this.http.post<LoginResponse>(`${this._url}/login`, body)
             .pipe(tap(({ token, user }) => {
                 localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(this._user));
+                localStorage.setItem('user', JSON.stringify(user));
                 this._user = user;
             }))
     }

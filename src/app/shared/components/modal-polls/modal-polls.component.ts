@@ -48,7 +48,7 @@ export class ModalPollsComponent implements OnInit {
     }
 
     closeModal() {
-        new DomModalHelper(this.modalService).removeSCSSClassesModal();
+        new DomModalHelper(this.modalService).removeSCSSClassesModal(false, true);
     }
 
     onSubmitForm() {

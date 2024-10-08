@@ -12,7 +12,7 @@ import { ValidatorService } from 'src/app/shared/validators/validator.service';
 export class SignUpComponent implements OnInit {
 
     form = this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(3), this.validatorService.validateName]],
+        name: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         password2: ['', [Validators.required, Validators.minLength(6)]]

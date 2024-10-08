@@ -1,23 +1,28 @@
 <div class="card">
 
-    <h3 class="card-title">{{optionToVote?.title}}</h3>
 
-    <img class="card-img-top" [src]="optionToVote?.img" [title]="optionToVote?.title">
-    <div class="card-body">
-        <div class="card-text">{{optionToVote?.description}}</div>
+    <img [src]="optionToVote?.img" [title]="optionToVote?.title" height="300px">
+
+
+    <div class="card-body p-3 border-top ">
+
+        <h3 class="card-title mb-2 fs-5">{{optionToVote?.title}}</h3>
+
+        <div class="card-text mb-4">{{optionToVote?.description}}</div>
     </div>
 
-    <div class="btn btn-primary fw-bold" [class.disabled]="haveVoted ||hasEnded"
-        [ngStyle]="{cursor:haveVoted || hasEnded ? 'not-allowed':'pointer'}"
-        *ngIf="currentUrl?.includes('/vote');else buttons" (click)="onVote()">
-        VOTE
+
+    <div class="d-flex justify-content-center mb-3" *ngIf="currentUrl?.includes('/vote');else buttons">
+        <div class="btn btn-primary fw-bold w-75 text-center"  (click)="onVote()">
+            <i class="fa-solid fa-check-to-slot"></i> VOTE
+        </div>
     </div>
+  
 
     <ng-template #buttons>
-        <div class="d-flex gap-3">
-            <button class="btn btn-info flex-grow-1 text-white fw-bold"
-                (click)="onClicButton(optionToVote)">Edit</button>
-            <button class="btn btn-danger flex-grow-1 fw-bold" (click)="onDelete()">Delete</button>
+        <div class="d-flex gap-3 justify-content-between mx-4 mb-3">
+            <button class="btn btn-outline-light border text-dark " (click)="onClicButton(optionToVote)"><i class="fa-solid fa-pen me-1"></i> Edit</button>
+            <button class="btn btn-danger" (click)="onDelete()"> <i class="fa-solid fa-trash me-1"></i> Delete</button>
         </div>
     </ng-template>
 

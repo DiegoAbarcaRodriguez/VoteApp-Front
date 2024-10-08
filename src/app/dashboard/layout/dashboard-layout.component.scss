@@ -1,9 +1,12 @@
-.dashboard {
-    height: 100vh;
+.place-items-center {
     display: grid;
     place-items: center;
 }
 
-.dashboard-expand{
-    min-height: 100%;
+.h-92 {
+    height: 91vh;
+}
+
+h1 {
+    z-index: 2;
 }

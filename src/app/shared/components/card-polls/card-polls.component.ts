@@ -39,7 +39,7 @@ export class CardPollComponent implements OnInit {
         try {
             await navigator.clipboard.writeText(this.poll?._id!);
             this.snackbarComponent!.message = 'The code has been copied!';
-            
+
         } catch (error) {
             this.snackbarComponent!.message = 'Has occured an error!'
         }
@@ -74,5 +74,6 @@ export class CardPollComponent implements OnInit {
         this.pollService.poll_id = this.poll?._id!;
         localStorage.setItem('poll_id', this.poll?._id!);
         this.router.navigate(['/dashboard/settings', this.poll?._id]);
+        this.pollService.onChangePoll_id = true;
     }
 }
