@@ -1,4 +1,12 @@
-<h3 class="fw-bold ">{{poll?.title}}</h3>
+<div class="d-flex align-items-center justify-content-between" *ngIf="poll?.numberOfParticipants===poll?.numberOfParticipations;else title ">
+    <h3 class="fw-bold ">{{poll?.title}}</h3>
+    <span class="text-danger fs-2 fw-bold text-underline"><u>Done</u></span>
+</div>
+
+<ng-template #title>
+    <h3 class="fw-bold ">{{poll?.title}}</h3>
+</ng-template>
+
 <p class="mb-0 mt-2">{{ poll?.description | slice:0:30}} {{poll?.description!.length >= 30? '...': ''}}</p>
 
 <div class="rounded-pill bg-light text-dark text-center">

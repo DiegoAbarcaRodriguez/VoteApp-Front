@@ -12,11 +12,12 @@
 
     &-content {
         height: auto;
-        display: grid;
     }
 
-    &-no-options{
+
+    &-no-options {
         height: 84vh;
+        display: grid;
     }
 
 }

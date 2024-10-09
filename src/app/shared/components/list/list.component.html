@@ -9,7 +9,7 @@
         <span class="my-4 alert alert-info text-center text-uppercase fw-bold" *ngIf="optionsToVote.length===0">
             There are not options yet!
         </span>
-        <div class="col-md-4  col mb-5 mb-md-0" *ngFor="let option of optionsToVote">
+        <div class="col-md-4 col-12 mb-4" *ngFor="let option of optionsToVote">
             <shared-card-votes [optionToVote]="option"></shared-card-votes>
         </div>
     </ng-template>
