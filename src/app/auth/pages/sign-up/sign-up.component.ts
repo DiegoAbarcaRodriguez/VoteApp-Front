@@ -11,6 +11,8 @@ import { ValidatorService } from 'src/app/shared/validators/validator.service';
 
 export class SignUpComponent implements OnInit {
 
+    isLoading: boolean = false;
+
     form = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
@@ -34,12 +36,17 @@ export class SignUpComponent implements OnInit {
             this.form.markAllAsTouched();
             return;
         }
-
+        this.isLoading = true;
         this.authService.signUp({ ...this.form.value })
             .subscribe({
-                next: () => PopUpAdaptador.generatePopUp('Success', 'Please verify your email to validate your account', 'success'),
+                next: () => {
+                    PopUpAdaptador.generatePopUp('Success', 'Please verify your email to validate your account', 'success').then(() => {
+                        this.isLoading = false;
+                    });
+                },
                 error: ({ error }: HttpErrorResponse) => {
-                    PopUpAdaptador.generatePopUp('Error', error.error, 'error')
+                    PopUpAdaptador.generatePopUp('Error', error.error, 'error').then(() => this.isLoading = true)
+
                 }
             });
 

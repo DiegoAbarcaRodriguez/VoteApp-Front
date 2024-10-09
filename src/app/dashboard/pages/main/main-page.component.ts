@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DomModalHelper } from 'src/app/shared/helpers/dom-modal.helper';
 import { Poll } from 'src/app/shared/interfaces/poll.interface';
 import { PopUpAdaptador } from 'src/app/shared/plugin';
@@ -11,7 +11,7 @@ import { PollService } from 'src/app/shared/services/poll.service';
     styleUrls: ['main-page.component.scss']
 })
 
-export class MainPageComponent implements OnInit, AfterViewInit {
+export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy {
     isShowedModal: boolean = false;
     pollToModify?: Poll;
     mustShowPolls: boolean = false;
@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     previousUrl?: string;
     pagesNumber: number[] = [];
     currentPage?: number
+    private interval: any;
 
 
     constructor(
@@ -27,8 +28,15 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         private pollService: PollService,
     ) { }
 
+    ngOnDestroy(): void {
+        clearInterval(this.interval);
+    }
+
     ngAfterViewInit(): void {
-        this.onAnimateCircles();
+        if (!this.mustShowPolls) {
+            this.onAnimateCircles();
+        }
+       
     }
 
     ngOnInit() {
@@ -112,7 +120,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         const circlePink: HTMLDivElement = document.querySelector('.circle--pink')!;
         const circleYellow: HTMLDivElement = document.querySelector('.circle--yellow')!;
 
-        setInterval(() => {
+        this.interval = setInterval(() => {
             circleBlue!.style.top = `${Math.random() * 90}%`;
             circleBlue!.style.left = `${Math.random() * 90}%`;
             circleRed!.style.top = `${Math.random() * 90}%`;

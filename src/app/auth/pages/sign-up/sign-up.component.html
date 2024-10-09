@@ -35,7 +35,7 @@
             <shared-error-message [form]="form" field="password2" [errors]="form.get('password2')?.errors || {}"></shared-error-message>
         </div>
 
-        <button type="submit" class=" btn btn-primary w-100">Save</button>
+        <button type="submit" class=" btn btn-primary w-100" [disabled]="isLoading">Save</button>
 
 
     </form>
